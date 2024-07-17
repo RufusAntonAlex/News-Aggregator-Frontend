@@ -157,3 +157,9 @@ h2 {
 .toggle-password-icon:hover {
   color: #333;
 }
+
+@media (max-width: 768px) {
+    body{
+        zoom: 0.5;
+    }
+}
