@@ -260,6 +260,11 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
+
+  .navbar{
+    padding: 22px;
+  }
+  
   .navbar-right {
     display: flex;
     align-items: center;
