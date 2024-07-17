@@ -64,3 +64,9 @@
   width: 150px; /* Adjust the size of the logo as needed */
   margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+    body{
+        zoom: 0.5;
+    }
+}
