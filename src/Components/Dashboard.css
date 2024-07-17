@@ -303,7 +303,7 @@ input:checked + .slider:before {
     position: absolute;
     top: 90px; /* Adjust as needed based on your navbar height */
     right: 20px;
-    background-color: #4f4f4f;
+    background-color: #0059b9dd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     border-radius: 25px;
@@ -315,6 +315,10 @@ input:checked + .slider:before {
     pointer-events: none;
   }
 
+  .dark-mode .menu-options{
+    background-color: #2b2a2aec;
+  }
+  
 
   .menu-options.open {
     display: flex; /* Show the menu options when .open class is applied */
