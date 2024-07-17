@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// Dashboard.js
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Dashboard.css'; // Import CSS for styling
 import settings from '../assets/settings.png';
@@ -11,6 +12,8 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true); // State to track loading
   const [isDarkMode, setIsDarkMode] = useState(false); // State for theme
   const [isLoggedIn, setIsLoggedIn] = useState(true); // State to track login status
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to track menu visibility
+  const menuRef = useRef(null);
 
   useEffect(() => {
     fetchNews(selectedCategory);
@@ -52,6 +55,30 @@ const Dashboard = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const openMenu = () => {
+    setIsMenuOpen(true); // Always set menu open on click
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
@@ -69,32 +96,38 @@ const Dashboard = () => {
       <nav className="navbar">
         <div className="navbar-left">NewsFeed</div>
         <div className="navbar-right">
-          <div className="nav-option">
-            <select
-              value={selectedCategory}
-              onChange={(e) => handleChangeCategory(e.target.value)}
-              className="nav-select"
-            >
-              <option value="General">General</option>
-              <option value="Business">Business</option>
-              <option value="Technology">Technology</option>
-              <option value="Sports">Sports</option>
-              <option value="Science">Science</option>
-            </select>
-          </div>
-          <div className="nav-option hell">
-            <i className="fa-regular fa-sun"></i>&nbsp;&nbsp;&nbsp;
-            <label className="switch">
-              <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
-              <span className="slider round"></span>
-            </label>&nbsp;&nbsp;&nbsp;
-            <i className="fa-regular fa-moon"></i>
-          </div>
-          <div className="nav-option logout" onClick={handleLogout}>
-            Logout
+          <i className="fa-solid fa-bars menu-icon" onClick={openMenu}></i>
+          {/* Menu Options */}
+          <div ref={menuRef} className={`menu-options ${isMenuOpen ? 'open' : ''}`}>
+            <i className="fa-solid fa-xmark" onClick={closeMenu}></i>
+            <div className="nav-option">
+              <select
+                value={selectedCategory}
+                onChange={(e) => handleChangeCategory(e.target.value)}
+                className="nav-select"
+              >
+                <option value="General">General</option>
+                <option value="Business">Business</option>
+                <option value="Technology">Technology</option>
+                <option value="Sports">Sports</option>
+                <option value="Science">Science</option>
+              </select>
+            </div>
+            <div className="nav-option hell">
+              <i className="fa-regular fa-sun"></i>&nbsp;&nbsp;&nbsp;
+              <label className="switch">
+                <input type="checkbox" checked={isDarkMode} onChange={toggleTheme} />
+                <span className="slider round"></span>
+              </label>&nbsp;&nbsp;&nbsp;
+              <i className="fa-regular fa-moon"></i>
+            </div>
+            <div className="nav-option logout" onClick={handleLogout}>
+              Logout
+            </div>
           </div>
         </div>
       </nav>
+
       <div className="content">
         <h2>Top Headlines ({selectedCategory})</h2>
         {loading ? (
