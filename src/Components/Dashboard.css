@@ -209,7 +209,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #858585;
+  background-color: #a3a3a3;
   transition: .4s;
   border-radius: 34px;
 }
@@ -303,10 +303,10 @@ input:checked + .slider:before {
     position: absolute;
     top: 90px; /* Adjust as needed based on your navbar height */
     right: 20px;
-    background-color: #bebebe;
+    background-color: #4f4f4f;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 25px;
     gap: 30px;
     display: none; /* Initially hide the menu options */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
@@ -325,11 +325,11 @@ input:checked + .slider:before {
   }
 
   .fa-sun {
-    color: black;
+    color: rgb(255, 255, 255);
   }
 
   .fa-moon {
-    color: black;
+    color: rgb(255, 255, 255);
   }
 
   .fa-xmark{
