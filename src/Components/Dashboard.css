@@ -24,6 +24,7 @@ body {
   background-color: #1f1f1f;
 }
 
+
 .navbar-left {
   font-size: 24px;
   font-weight: bold;
@@ -34,6 +35,35 @@ body {
   display: flex;
   align-items: center;
   gap: 40px;
+}
+
+.menu-icon {
+  display: block; /* Ensure the menu icon is visible for all screen sizes */
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.fa-xmark{
+  display: none;
+}
+
+
+.menu-icon {
+  display: none; /* Initially hide the menu icon for screens wider than 768px */
+}
+
+.menu-options {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+
+
+}
+
+.menu-options.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .hell {
@@ -136,11 +166,6 @@ body {
   text-decoration: underline;
 }
 
-.img {
-  width: 100%;
-  height: auto;
-}
-
 .loading {
   display: flex;
   justify-content: center;
@@ -151,12 +176,16 @@ body {
 .loading-image {
   width: 70px; /* Adjust as needed */
   height: 70px; /* Adjust as needed */
-  animation: spin 1s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Toggle switch */
@@ -180,7 +209,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #858585;
   transition: .4s;
   border-radius: 34px;
 }
@@ -231,42 +260,26 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
-  .articles {
-    flex-direction: column;
-  }
-
-  .article {
-    width: 100%;
-  }
-
   .navbar-right {
+    display: flex;
+    align-items: center;
     gap: 10px;
     flex-direction: column;
     align-items: flex-end;
   }
 
+  .menu-icon {
+    display: block; /* Show the menu icon for screens narrower than 768px */
+    font-size: 25px;
+    cursor: pointer;
+  }
+
   .nav-select {
     width: 100%;
   }
-}
-
-@media (max-width: 500px) {
-  .navbar-left {
-    font-size: 20px;
-  }
-
-  .navbar-right {
-    gap: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-select {
-    font-size: 14px;
-  }
 
   .articles {
-    gap: 10px;
+    flex-direction: column;
   }
 
   .article {
@@ -279,5 +292,48 @@ input:checked + .slider:before {
 
   .article p {
     font-size: 12px;
+  }
+
+  .menu-options {
+    position: absolute;
+    top: 60px; /* Adjust as needed based on your navbar height */
+    right: 20px;
+    background-color: #d0d0d0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    gap: 30px;
+    display: none; /* Initially hide the menu options */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
+    transform: translateY(-150%); /* Start off-screen */
+    opacity: 0;
+    pointer-events: none;
+  }
+
+
+  .menu-options.open {
+    display: flex; /* Show the menu options when .open class is applied */
+    flex-direction: column;
+    transform: translateY(0); /* Bring menu options into view */
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .fa-sun {
+    color: black;
+  }
+
+  .fa-moon {
+    color: black;
+  }
+
+  .fa-xmark{
+    display: block;
+    color: black;
+    font-size: 20px;
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 65%;
+    background-color: #ffffff;
   }
 }
