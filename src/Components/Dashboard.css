@@ -264,7 +264,6 @@ input:checked + .slider:before {
   .navbar{
     padding: 22px;
   }
-  
   .navbar-right {
     display: flex;
     align-items: center;
@@ -277,6 +276,7 @@ input:checked + .slider:before {
     display: block; /* Show the menu icon for screens narrower than 768px */
     font-size: 25px;
     cursor: pointer;
+
   }
 
   .nav-select {
@@ -301,11 +301,11 @@ input:checked + .slider:before {
 
   .menu-options {
     position: absolute;
-    top: 60px; /* Adjust as needed based on your navbar height */
+    top: 90px; /* Adjust as needed based on your navbar height */
     right: 20px;
-    background-color: #d0d0d0;
+    background-color: #bebebe;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
     gap: 30px;
     display: none; /* Initially hide the menu options */
