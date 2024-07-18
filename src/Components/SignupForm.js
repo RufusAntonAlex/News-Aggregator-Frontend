@@ -6,6 +6,7 @@ import logo from '../assets/image.png'; // Import the logo image
 
 const SignupForm = () => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // State for email
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [passwordRequirements, setPasswordRequirements] = useState({
@@ -35,7 +36,7 @@ const SignupForm = () => {
       return;
     }
     try {
-      await axios.post('https://news-aggregator-login-backend.onrender.com/signup', { username, password }).then((result) => {
+      await axios.post('https://news-aggregator-login-backend.onrender.com/signup', { username, email, password }).then((result) => {
         console.log(result);
         navigate('/'); // Navigate to the login page
       });
@@ -59,6 +60,15 @@ const SignupForm = () => {
       <img src={logo} alt="Logo" className="logo" />
       <h2>Signup</h2>
       <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="input email"
+      />
+
+      <input
         type="text"
         placeholder="Username"
         value={username}
@@ -66,6 +76,7 @@ const SignupForm = () => {
         required
         className="input"
       />
+     
       <div className="password-input">
         <input
           type={passwordVisible ? 'text' : 'password'}
