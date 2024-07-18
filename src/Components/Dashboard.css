@@ -342,7 +342,7 @@ input:checked + .slider:before {
     font-size: 20px;
     border: 1px solid black;
     padding: 8px;
-    border-radius: 65%;
+    border-radius: 50%;
     background-color: #ffffff;
   }
 }
