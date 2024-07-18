@@ -341,8 +341,8 @@ input:checked + .slider:before {
     color: black;
     font-size: 20px;
     border: 1px solid black;
-    padding: 8px;
-    border-radius: 50%;
+    padding: 10px;
+    border-radius: 45%;
     background-color: #ffffff;
   }
 }
