@@ -5,7 +5,7 @@ body {
   background-color: #f4f4f9;
   margin: 0;
   padding: 0;
-  height: 100vh;
+
 }
 
 .form {
@@ -17,7 +17,8 @@ body {
   max-width: 400px;
   text-align: center;
   margin: auto;
-  margin-top: 50px;
+  margin-top: 35px;
+
 }
 
 h2 {
@@ -136,6 +137,16 @@ h2 {
   position: relative;
 }
 
+.email{
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+ 
+  
+}
+
 .password-field {
   width: calc(100% - 40px);
   padding: 10px;
@@ -156,10 +167,4 @@ h2 {
 
 .toggle-password-icon:hover {
   color: #333;
-}
-
-@media (max-width: 768px) {
-    .form {
-        zoom: 0.8;
-    }
 }
