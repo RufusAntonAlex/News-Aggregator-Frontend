@@ -299,7 +299,7 @@ input:checked + .slider:before {
   }
 
   .menu-options {
-    position: absolute;
+    position: fixed; /* Use fixed position */
     display: flex;
     flex-direction: column;
     top: 90px; /* Adjust as needed based on your navbar height */
@@ -341,4 +341,5 @@ input:checked + .slider:before {
     background-color: #ffffff;
   }
 }
+
 
