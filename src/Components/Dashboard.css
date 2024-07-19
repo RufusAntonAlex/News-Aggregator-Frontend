@@ -260,10 +260,10 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
-
-  .navbar{
+  .navbar {
     padding: 22px;
   }
+
   .navbar-right {
     display: flex;
     align-items: center;
@@ -276,7 +276,6 @@ input:checked + .slider:before {
     display: block; /* Show the menu icon for screens narrower than 768px */
     font-size: 25px;
     cursor: pointer;
-
   }
 
   .nav-select {
@@ -301,6 +300,8 @@ input:checked + .slider:before {
 
   .menu-options {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 90px; /* Adjust as needed based on your navbar height */
     right: 20px;
     background-color: #0059b9dd;
@@ -308,24 +309,18 @@ input:checked + .slider:before {
     padding: 20px;
     border-radius: 25px;
     gap: 30px;
-    display: none; /* Initially hide the menu options */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition */
-    transform: translateY(-150%); /* Start off-screen */
-    opacity: 0;
-    pointer-events: none;
+    transform: translateX(100%); /* Initially place it off-screen to the right */
+    opacity: 0; /* Initially hide the menu options */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition for transform and opacity properties */
   }
 
-  .dark-mode .menu-options{
+  .dark-mode .menu-options {
     background-color: #2b2a2aec;
   }
-  
 
   .menu-options.open {
-    display: flex; /* Show the menu options when .open class is applied */
-    flex-direction: column;
-    transform: translateY(0); /* Bring menu options into view */
-    opacity: 1;
-    pointer-events: auto;
+    transform: translateX(0); /* Move it into view */
+    opacity: 1; /* Show the menu options */
   }
 
   .fa-sun {
@@ -336,7 +331,7 @@ input:checked + .slider:before {
     color: rgb(255, 255, 255);
   }
 
-  .fa-xmark{
+  .fa-xmark {
     display: block;
     color: black;
     font-size: 20px;
@@ -346,3 +341,4 @@ input:checked + .slider:before {
     background-color: #ffffff;
   }
 }
+
