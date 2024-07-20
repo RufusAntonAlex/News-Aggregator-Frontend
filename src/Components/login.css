@@ -76,3 +76,10 @@
   font-size: 15px; /* Adjust the font size */
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .form{
+    zoom: 0.82;
+  }
+}
+  
