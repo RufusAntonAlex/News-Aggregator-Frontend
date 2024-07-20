@@ -1,18 +1,20 @@
-// Dashboard.js
-import React, { useState, useEffect, useRef } from 'react';
+// src/Components/Dashboard.js
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Dashboard.css'; // Import CSS for styling
+import { UserContext } from '../context/UserContext'; // Import UserContext
+import './Dashboard.css';
 import settings from '../assets/settings.png';
-import LoginForm from './LoginForm'; // Import LoginForm component
+import LoginForm from './LoginForm';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext); // Get user from context
   const [articles, setArticles] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('General'); // Default category
-  const [loading, setLoading] = useState(true); // State to track loading
-  const [isDarkMode, setIsDarkMode] = useState(false); // State for theme
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // State to track login status
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to track menu visibility
+  const [selectedCategory, setSelectedCategory] = useState('General');
+  const [loading, setLoading] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const Dashboard = () => {
   }, [selectedCategory]);
 
   const fetchNews = async (category) => {
-    setLoading(true); // Set loading to true when starting to fetch news
+    setLoading(true);
     try {
       const response = await fetch(`https://news-aggregator-backend-h2br.onrender.com/top-headlines?category=${category}&language=en&page=1&pageSize=80`);
       if (!response.ok) {
@@ -35,16 +37,16 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching news:', error);
     } finally {
-      setLoading(false); // Set loading to false after fetching news
+      setLoading(false);
     }
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false); // Set login status to false
-    setIsDarkMode(false); // Reset dark mode
-    document.body.classList.remove('dark-mode'); // Remove dark mode class
-    navigate('/'); // Navigate to login page
+    setIsLoggedIn(false);
+    setIsDarkMode(false);
+    document.body.classList.remove('dark-mode');
+    navigate('/');
   };
 
   const handleChangeCategory = (category) => {
@@ -56,7 +58,7 @@ const Dashboard = () => {
   };
 
   const openMenu = () => {
-    setIsMenuOpen(true); // Always set menu open on click
+    setIsMenuOpen(true);
   };
 
   const closeMenu = () => {
@@ -97,7 +99,6 @@ const Dashboard = () => {
         <div className="navbar-left">NewsFeed</div>
         <div className="navbar-right">
           <i className="fa-solid fa-bars menu-icon" onClick={openMenu}></i>
-          {/* Menu Options */}
           <div ref={menuRef} className={`menu-options ${isMenuOpen ? 'open' : ''}`}>
             <i className="fa-solid fa-xmark" onClick={closeMenu}></i>
             <div className="nav-option">
@@ -129,7 +130,9 @@ const Dashboard = () => {
       </nav>
 
       <div className="content">
-        <h2>Top Headlines ({selectedCategory})</h2>
+      <h3 className='welcome-message'>Welcome, {user.username}</h3> 
+        <h2 className='top-head'>Top Headlines ({selectedCategory})</h2>
+        
         {loading ? (
           <div className="loading">
             <img src={settings} alt="Loading" className="loading-image" />
