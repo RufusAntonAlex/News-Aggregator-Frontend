@@ -385,6 +385,10 @@ input:checked + .slider:before {
   .welcome-message {
     font-size: 1.3rem;
   }
+
+  .welcome-message .dark-mode {
+    font-size: 1.3rem;
+  }
 }
 
 
