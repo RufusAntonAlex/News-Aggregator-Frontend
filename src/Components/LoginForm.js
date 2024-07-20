@@ -1,21 +1,25 @@
 // src/Components/LoginForm.js
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './login.css'; // Import CSS for styling
-import logo from '../assets/image.png'; // Import the logo image
+import { UserContext } from '../context/UserContext'; // Import UserContext
+import './login.css';
+import logo from '../assets/image.png';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { setUser } = useContext(UserContext); // Get setUser from context
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://news-aggregator-login-backend.onrender.com/api/login', { username, password });
+      const response = await axios.post('http://localhost:3001/api/login', { username, password });
       localStorage.setItem('token', response.data.token);
-      window.location.href = '/dashboard';
+      setUser({ username }); // Set the user context
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       setError('Invalid credentials. Please try again.');
@@ -23,7 +27,6 @@ const LoginForm = () => {
   };
 
   return (
-    
     <form onSubmit={handleLogin} className="form">
       <img src={logo} alt="Logo" className="logo" />
       <h2>Login</h2>
