@@ -46,10 +46,11 @@ const LoginForm = () => {
       />
       {error && <p className="error">{error}</p>}
       <br></br><br></br>
-      <button type="submit">Login</button>
-      <p>
+      <button type="submit" className='loginbtn'>Login</button>
+      <p className='neww'>
         Don't have an account? <Link to="/signup">Signup here</Link>
       </p>
+      <p className="info">Please do not refresh the page after logging in</p>
     </form>
   );
 };
