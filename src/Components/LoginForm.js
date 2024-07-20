@@ -16,7 +16,7 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://news-aggregator-login-backend.onrender.com/login', { username, password });
+      const response = await axios.post('https://news-aggregator-login-backend.onrender.com/api/login', { username, password });
       localStorage.setItem('token', response.data.token);
       setUser({ username }); // Set the user context
       navigate('/dashboard');
