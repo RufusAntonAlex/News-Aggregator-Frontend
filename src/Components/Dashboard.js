@@ -137,6 +137,8 @@ const Dashboard = () => {
                 <option value="Technology">Technology</option>
                 <option value="Sports">Sports</option>
                 <option value="Science">Science</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Health">Health</option>
               </select>
             </div>
             <div className="nav-option hell">
