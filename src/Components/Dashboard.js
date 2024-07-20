@@ -1,25 +1,44 @@
-// src/Components/Dashboard.js
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext'; // Import UserContext
 import './Dashboard.css';
 import settings from '../assets/settings.png';
 import LoginForm from './LoginForm';
+import { UserContext } from '../context/UserContext';
 
 const Dashboard = () => {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext); // Get user from context
   const [articles, setArticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('General');
   const [loading, setLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
+    if (!user) {
+      navigate('/');
+      return;
+    }
     fetchNews(selectedCategory);
-  }, [selectedCategory]);
+  }, [selectedCategory, user, navigate]);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (hasUnsavedChanges) {
+        event.preventDefault();
+        event.returnValue = ''; // Required for Chrome to display the confirmation dialog
+      }
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [hasUnsavedChanges]);
 
   const fetchNews = async (category) => {
     setLoading(true);
@@ -51,10 +70,12 @@ const Dashboard = () => {
 
   const handleChangeCategory = (category) => {
     setSelectedCategory(category);
+    setHasUnsavedChanges(true);
   };
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+    setHasUnsavedChanges(true);
   };
 
   const openMenu = () => {
@@ -91,6 +112,10 @@ const Dashboard = () => {
 
   if (!isLoggedIn) {
     return <LoginForm />;
+  }
+
+  if (!user) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -130,9 +155,8 @@ const Dashboard = () => {
       </nav>
 
       <div className="content">
-      <h3 className='welcome-message'>Welcome, {user.username}</h3> 
-        <h2 className='top-head'>Top Headlines ({selectedCategory})</h2>
-        
+        <h3 className="welcome-message">Welcome, {user.username}</h3>
+        <h2>Top Headlines ({selectedCategory})</h2>
         {loading ? (
           <div className="loading">
             <img src={settings} alt="Loading" className="loading-image" />
