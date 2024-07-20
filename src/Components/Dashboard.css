@@ -382,6 +382,9 @@ input:checked + .slider:before {
     border-radius: 45%;
     background-color: #ffffff;
   }
+  .welcome-message {
+    font-size: 1.3rem;
+  }
 }
 
 
