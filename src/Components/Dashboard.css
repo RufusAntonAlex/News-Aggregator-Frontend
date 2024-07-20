@@ -173,6 +173,48 @@ body {
   height: 70vh; /* Adjust as needed */
 }
 
+.dark-mode .welcome-message {
+  font-size: 1.5rem;
+  color: #ffffff; /* Green color */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  border: 2px solid #a8a8a8;
+  border-radius: 10px;
+  padding: 13px;
+  background-color: #2e2e2e;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.dark-mode .welcome-message:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+
+.welcome-message {
+  margin-bottom: 30px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 2px;
+  font-size: 1.6rem;
+  color: #0056b3; /* Green color */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  border: 2px solid #0056b3;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.welcome-message:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
 .loading-image {
   width: 70px; /* Adjust as needed */
   height: 70px; /* Adjust as needed */
