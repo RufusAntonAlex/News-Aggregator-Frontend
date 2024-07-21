@@ -5,11 +5,53 @@ import settings from '../assets/settings.png';
 import LoginForm from './LoginForm';
 import { UserContext } from '../context/UserContext';
 
+const languages = {
+  en: "English",
+  hi: "Hindi",
+  ta: "Tamil",
+  te: "Telugu",
+  bn: "Bengali",
+  mr: "Marathi",
+  gu: "Gujarati",
+  kn: "Kannada",
+  ml: "Malayalam",
+  or: "Odia",
+  pa: "Punjabi",
+  ur: "Urdu",
+  as: "Assamese",
+  si: "Sinhala",
+  es: "Spanish",
+  fr: "French",
+  de: "German",
+  it: "Italian",
+  pt: "Portuguese",
+  zh: "Chinese",
+  ja: "Japanese",
+  ko: "Korean",
+  ar: "Arabic",
+  ru: "Russian",
+  pl: "Polish",
+  tr: "Turkish",
+  nl: "Dutch",
+  sv: "Swedish",
+  da: "Danish",
+  no: "Norwegian",
+  fi: "Finnish",
+  el: "Greek",
+  hu: "Hungarian",
+  cs: "Czech",
+  ro: "Romanian",
+  th: "Thai",
+  vi: "Vietnamese",
+};
+
+
 const Dashboard = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('General');
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [loading, setLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -22,8 +64,8 @@ const Dashboard = () => {
       navigate('/');
       return;
     }
-    fetchNews(selectedCategory);
-  }, [selectedCategory, user, navigate]);
+    fetchNews(selectedCategory, selectedLanguage);
+  }, [selectedCategory, selectedLanguage, user, navigate]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -32,7 +74,7 @@ const Dashboard = () => {
         event.returnValue = ''; // Required for Chrome to display the confirmation dialog
       }
     };
-    
+
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
@@ -40,16 +82,17 @@ const Dashboard = () => {
     };
   }, [hasUnsavedChanges]);
 
-  const fetchNews = async (category) => {
+  const fetchNews = async (category, language) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://news-aggregator-backend-h2br.onrender.com/top-headlines?category=${category}&language=en&page=1&pageSize=80`);
+      const response = await fetch(`https://news-aggregator-backend-h2br.onrender.com/top-headlines?category=${category}&language=${language}&page=1&pageSize=80`);
       if (!response.ok) {
         throw new Error(`Failed to fetch news - ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
       if (data.data.status === 'ok') {
-        setArticles(data.data.articles);
+        const translatedArticles = language !== 'en' ? await translateArticles(data.data.articles, language) : data.data.articles;
+        setArticles(translatedArticles);
       } else {
         throw new Error('Failed to fetch news - Invalid response');
       }
@@ -59,6 +102,59 @@ const Dashboard = () => {
       setLoading(false);
     }
   };
+
+  const translateArticles = async (articles, targetLanguage) => {
+    const apiKey = 'AIzaSyB_AkerIqqCZYuOXIzLvcUKjVSmR6i0_7o';
+    const translatedArticles = await Promise.all(articles.map(async article => {
+      const translatedTitle = await translateText(article.title, targetLanguage, apiKey);
+      const translatedDescription = await translateText(article.description, targetLanguage, apiKey);
+      const translatedContent = await translateText(article.content, targetLanguage, apiKey);
+      return {
+        ...article,
+        title: translatedTitle,
+        description: translatedDescription,
+        content: translatedContent
+      };
+    }));
+
+    return translatedArticles;
+  };
+
+  const translateText = async (text, targetLanguage, apiKey) => {
+    const supportedLanguages = [
+      'en', 'hi', 'ta', 'te', 'bn', 'mr', 'gu', 'kn', 'ml', 'or', 'pa', 'ur', 'as', 'si',
+      'es', 'fr', 'de', 'it', 'pt', 'zh', 'ja', 'ko', 'ar', 'ru', 'pl', 'tr', 'nl', 'sv',
+      'da', 'no', 'fi', 'el', 'hu', 'cs', 'ro', 'th', 'vi'
+    ];
+    if (!supportedLanguages.includes(targetLanguage)) {
+      console.warn('Translation not supported for this language:', targetLanguage);
+      return text;
+    }
+  
+    try {
+      const response = await fetch(`https://translation.googleapis.com/language/translate/v2?key=${apiKey}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          q: text,
+          target: targetLanguage
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Translation API error: ${response.status} ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      return data.data.translations[0].translatedText;
+    } catch (error) {
+      console.error('Error translating text:', error);
+      return text; // Return original text in case of error
+    }
+  };
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -70,6 +166,11 @@ const Dashboard = () => {
 
   const handleChangeCategory = (category) => {
     setSelectedCategory(category);
+    setHasUnsavedChanges(true);
+  };
+
+  const handleChangeLanguage = (language) => {
+    setSelectedLanguage(language);
     setHasUnsavedChanges(true);
   };
 
@@ -141,6 +242,20 @@ const Dashboard = () => {
                 <option value="Health">Health</option>
               </select>
             </div>
+            <div className="nav-option">
+            <select
+              value={selectedLanguage}
+              onChange={(e) => handleChangeLanguage(e.target.value)}
+              className="nav-select onee"
+            >
+              {Object.keys(languages).map((lang) => (
+                <option key={lang} value={lang}>
+                  {languages[lang]}
+                </option>
+              ))}
+            </select>
+          </div>
+
             <div className="nav-option hell">
               <i className="fa-regular fa-sun"></i>&nbsp;&nbsp;&nbsp;
               <label className="switch">
