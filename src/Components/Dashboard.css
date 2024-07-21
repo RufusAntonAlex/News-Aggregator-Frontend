@@ -9,6 +9,9 @@ body {
   background-color: #121212;
   color: #ffffff;
 }
+.onee{
+    width: 132px;
+}
 
 .navbar {
   display: flex;
@@ -388,6 +391,10 @@ input:checked + .slider:before {
 
   .welcome-message .dark-mode {
     font-size: 1.3rem;
+  }
+
+  .onee{
+    width: 132px;
   }
 }
 
