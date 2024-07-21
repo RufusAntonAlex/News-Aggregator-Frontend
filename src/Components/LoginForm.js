@@ -1,8 +1,8 @@
-// src/Components/LoginForm.js
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserContext } from '../context/UserContext'; // Import UserContext
+import { UserContext } from '../context/UserContext';
+import { ThreeDots } from 'react-loader-spinner'; // Import the ThreeDots component
 import './login.css';
 import logo from '../assets/image.png';
 
@@ -10,19 +10,23 @@ const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { setUser } = useContext(UserContext); // Get setUser from context
+  const [loading, setLoading] = useState(false); // Add loading state
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when login starts
     try {
       const response = await axios.post('https://news-aggregator-login-backend.onrender.com/api/login', { username, password });
       localStorage.setItem('token', response.data.token);
-      setUser({ username }); // Set the user context
+      setUser({ username });
       navigate('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       setError('Invalid credentials. Please try again.');
+    } finally {
+      setLoading(false); // Set loading to false when login completes
     }
   };
 
@@ -45,8 +49,20 @@ const LoginForm = () => {
         required
       />
       {error && <p className="error">{error}</p>}
-      <br></br><br></br>
-      <button type="submit" className='loginbtn'>Login</button>
+      <br /><br />
+      <button type="submit" className='loginbtn' disabled={loading}>Login</button>
+      {loading && (
+        <div className="loader-container">
+          <ThreeDots
+            height="80"
+            width="80"
+            radius="9"
+            color="#007bff"
+            ariaLabel="three-dots-loading"
+            visible={true}
+          />
+        </div>
+      )}
       <p className='neww'>
         Don't have an account? <Link to="/signup">Signup here</Link>
       </p>
