@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner'; // Import the ThreeDots component
 import './signup.css'; // Import CSS for styling
 import logo from '../assets/image.png'; // Import the logo image
 
@@ -9,6 +10,7 @@ const SignupForm = () => {
   const [email, setEmail] = useState(''); // State for email
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
   const [passwordRequirements, setPasswordRequirements] = useState({
     minLength: false,
     hasUppercase: false,
@@ -35,14 +37,15 @@ const SignupForm = () => {
       setError('Password does not meet the requirements.');
       return;
     }
+    setLoading(true); // Set loading to true when signup starts
     try {
-      await axios.post('https://news-aggregator-login-backend.onrender.com/signup', { username, email, password }).then((result) => {
-        console.log(result);
-        navigate('/'); // Navigate to the login page
-      });
+      await axios.post('https://news-aggregator-login-backend.onrender.com/signup', { username, email, password });
+      navigate('/'); // Navigate to the login page
     } catch (error) {
       console.error('Signup error:', error);
       setError('Signup failed. Please try again.'); // Example error handling
+    } finally {
+      setLoading(false); // Set loading to false when signup completes
     }
   };
 
@@ -67,7 +70,6 @@ const SignupForm = () => {
         required
         className="input email"
       />
-
       <input
         type="text"
         placeholder="Username"
@@ -76,7 +78,6 @@ const SignupForm = () => {
         required
         className="input"
       />
-     
       <div className="password-input">
         <input
           type={passwordVisible ? 'text' : 'password'}
@@ -115,9 +116,21 @@ const SignupForm = () => {
         </ul>
       </div>
       {error && <p className="error">{error}</p>}
-      <button type="submit" className="button">
+      <button type="submit" className="button" disabled={loading}>
         Signup
       </button>
+      {loading && (
+        <div className="loader-container">
+          <ThreeDots
+            height="70"
+            width="70"
+            radius="9"
+            color="#007bff"
+            ariaLabel="three-dots-loading"
+            visible={true}
+          />
+        </div>
+      )}
       <p className="login-link">
         Already have an account? <Link to="/">Login here</Link>
       </p>
