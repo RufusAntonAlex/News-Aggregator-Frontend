@@ -119,7 +119,7 @@ const SignupForm = () => {
       <button type="submit" className="button" disabled={loading}>
         Signup
       </button>
-
+      {loading && (
         <div className="loader-container">
           <ThreeDots
             height="70"
@@ -130,7 +130,7 @@ const SignupForm = () => {
             visible={true}
           />
         </div>
-    
+    )}
       <p className="login-link">
         Already have an account? <Link to="/">Login here</Link>
       </p>
