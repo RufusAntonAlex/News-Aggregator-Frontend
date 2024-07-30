@@ -92,6 +92,7 @@
   font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
+  line-height: 40px;
 }
 
 @media (max-width: 768px) {
