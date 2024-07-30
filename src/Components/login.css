@@ -87,10 +87,12 @@
   margin-top: 20px;
 }
 
-.info:last-of-type {
-  margin-top: 10px; /* Add spacing between the info messages */
+.language-info {
+  color: #ff6f61; /* A different color for emphasis */
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
 }
-
 
 @media (max-width: 768px) {
   .form{
