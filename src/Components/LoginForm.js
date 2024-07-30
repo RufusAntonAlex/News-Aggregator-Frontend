@@ -67,6 +67,10 @@ const LoginForm = () => {
         Don't have an account? <Link to="/signup">Signup here</Link>
       </p>
       <p className="info">Please do not refresh the page after logging in</p>
+
+      <p className="info">
+  Language-changing functionality is currently not working but will be fixed soon.
+</p>
     </form>
   );
 };
