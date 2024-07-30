@@ -82,7 +82,7 @@
 }
 
 .info {
-  color: red; /* Change the color as needed */
+  color: #007bff;  /* Change the color as needed */
   font-size: 15px; /* Adjust the font size */
   margin-top: 20px;
 }
