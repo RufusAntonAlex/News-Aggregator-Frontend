@@ -80,11 +80,17 @@
 
   margin-bottom: 25px;
 }
+
 .info {
   color: red; /* Change the color as needed */
   font-size: 15px; /* Adjust the font size */
   margin-top: 20px;
 }
+
+.info:last-of-type {
+  margin-top: 10px; /* Add spacing between the info messages */
+}
+
 
 @media (max-width: 768px) {
   .form{
