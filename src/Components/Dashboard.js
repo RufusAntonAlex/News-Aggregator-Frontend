@@ -85,7 +85,7 @@ const Dashboard = () => {
   const fetchNews = async (category, language) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://news-aggregator-backend-h2br.onrender.com/top-headlines?category=${category}&page=1&pageSize=80`);
+      const response = await fetch(`https://news-aggregator-backend-h2br.onrender.com/top-headlines?category=${category}&language=${language}&page=1&pageSize=80`);
       if (!response.ok) {
         throw new Error(`Failed to fetch news - ${response.status} ${response.statusText}`);
       }
