@@ -281,10 +281,10 @@ const Dashboard = () => {
         ) : (
           <div className="articles">
             {articles
-              
+              .filter(article => article.title !== '[Removed]' && article.urlToImage)
               .map((article, index) => (
                 <div key={index} className="article">
-                  
+                  <img src={article.urlToImage} alt={article.title} className="article-image" />
                   <h3>{article.title}</h3>
                   <p>{article.description}</p>
                   <p>{article.publishedAt}</p>
