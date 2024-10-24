@@ -69,7 +69,7 @@ const LoginForm = () => {
       <p className="info">Please do not refresh the page after logging in</p>
 
       <p className="language-info">
-    Note: The language-changing functionality is currently not working but will be fixed soon.
+   
   </p>
     </form>
   );
